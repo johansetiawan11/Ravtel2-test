@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ext .js .",
+    "migrate-latest": "node cli/migrateDb.js",
+    "migrate-rollback": "node cli/migrateDb.js --rollback-flag",
+    "migrate-seed": "node cli/migrateDb.js --seed-flag",
     "precommit": "lint-staged",
     "prepare": "husky install",
     "start": "node index.js"
@@ -18,7 +21,7 @@
     "eslint-plugin-import": "^2.25.2",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.3",
-    "yargs": "^17.1.1"
+    "yargs": "^17.2.1"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -27,6 +30,9 @@
     "express": "^4.17.1",
     "express-openapi-validator": "^4.13.2",
     "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.12",
+    "objection": "^2.2.17",
+    "pg": "^8.7.1",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
   },
