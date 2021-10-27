@@ -6,6 +6,7 @@ const swaggerJsdocFcomposer = require("swagger-jsdoc");
 const swaggerUiExpress = require("swagger-ui-express");
 
 // Internal dependencies
+const dataMock = require("./lib/dataMock");
 const handlerFcomposerHash = require("./handler");
 const routerFcomposer = require("./router");
 
@@ -50,6 +51,7 @@ const env = {
 };
 const diHash = {
   app,
+  dataMock,
   env,
   express,
   handlerFcomposerHash,
