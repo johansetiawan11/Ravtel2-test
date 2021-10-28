@@ -1,15 +1,15 @@
 /**
  * @openapi
- * /user/{id}:
+ * /user/{UUID}:
  *   put:
  *     description: Update a user record.
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: UUID
  *         required: true
- *         description: Numeric ID of the user to retrieve.
+ *         description: String UUID of the user to update.
  *         schema:
- *           type: integer
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
@@ -27,29 +27,34 @@
  *     putUserPayload:
  *       type: object
  *       properties:
+ *         fullname:
+ *           type: string
+ *           description: Name of userr
  *         email:
  *           type: string
- *           description: Email of user
- *         password:
+ *           description: Email of userr
+ *         username:
  *           type: string
- *           description: Password of user
- *         confirmationPassword:
+ *           description: username of use
+ *         rolename:
  *           type: string
- *           description: Confirmation password of user
+ *           description: rolename of use
  *       required:
  *         - email
- *         - password
- *         - confirmationPassword
+ *         - fullname
+ *         - rolename
+ *         - username
  */
 function putUserRouterComposer(diHash) {
   const {
-    handlerFcomposerHash,
     express,
+    handlerFcomposerHash,
+    middlewareFcomposerHash,
   } = diHash;
+  const auth = middlewareFcomposerHash.Authentication;
   const expressRouter = express.Router();
-
   const handlerFcomposer = handlerFcomposerHash.putUser;
-  expressRouter.put("/user/:id", handlerFcomposer(diHash));
+  expressRouter.put("/user/:uuid", [auth(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

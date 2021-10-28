@@ -1,15 +1,15 @@
 /**
  * @openapi
- * /user/{id}:
+ * /user/{UUID}:
  *   get:
  *     description: Retrieve a user record.
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: UUID
  *         required: true
- *         description: Numeric ID of the user to retrieve.
+ *         description: UUID of the user to retrieve.
  *         schema:
- *           type: integer
+ *           type: string
  *     responses:
  *       200:
  *         description: Retrieved user record.
@@ -18,13 +18,14 @@
  */
 function getUserRouterComposer(diHash) {
   const {
-    handlerFcomposerHash,
     express,
+    handlerFcomposerHash,
+    middlewareFcomposerHash,
   } = diHash;
+  const auth = middlewareFcomposerHash.Authentication;
   const expressRouter = express.Router();
-
   const handlerFcomposer = handlerFcomposerHash.getUser;
-  expressRouter.get("/user/:id", handlerFcomposer(diHash));
+  expressRouter.get("/user/:uuid", [auth(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

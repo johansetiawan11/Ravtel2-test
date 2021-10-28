@@ -20,29 +20,38 @@
  *     postUserPayload:
  *       type: object
  *       properties:
+ *         fullname:
+ *           type: string
+ *           description: Name of user
  *         email:
  *           type: string
  *           description: Email of user
  *         password:
  *           type: string
  *           description: Password of user
- *         confirmationPassword:
+ *         username:
  *           type: string
- *           description: Confirmation password of user
+ *           description: username of use
+ *         rolename:
+ *           type: string
+ *           description: rolename of use
  *       required:
  *         - email
+ *         - fullname
  *         - password
- *         - confirmationPassword
+ *         - rolename
+ *         - username
  */
 function postUserRouterComposer(diHash) {
   const {
-    handlerFcomposerHash,
     express,
+    handlerFcomposerHash,
+    middlewareFcomposerHash,
   } = diHash;
+  const auth = middlewareFcomposerHash.Authentication;
   const expressRouter = express.Router();
-
   const handlerFcomposer = handlerFcomposerHash.postUser;
-  expressRouter.post("/user", handlerFcomposer(diHash));
+  expressRouter.post("/user", [auth(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }
