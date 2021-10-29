@@ -20,23 +20,22 @@
  *     postUserAuthPayload:
  *       type: object
  *       properties:
- *         email:
+ *         username:
  *           type: string
- *           description: Email of user
+ *           description: Username of user
  *         password:
  *           type: string
  *           description: Password of user
  *       required:
- *         - email
+ *         - username
  *         - password
  */
 function postUserAuthRouterComposer(diHash) {
   const {
-    handlerFcomposerHash,
     express,
+    handlerFcomposerHash,
   } = diHash;
   const expressRouter = express.Router();
-
   const handlerFcomposer = handlerFcomposerHash.postUserAuth;
   expressRouter.post("/user/auth", handlerFcomposer(diHash));
 

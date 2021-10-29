@@ -1,6 +1,8 @@
 // External dependencies
+const bcrypt = require("bcryptjs");
 const cors = require("cors");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const expressOpenapiValidator = require("express-openapi-validator");
 const swaggerJsdocFcomposer = require("swagger-jsdoc");
 const swaggerUiExpress = require("swagger-ui-express");
@@ -8,6 +10,7 @@ const swaggerUiExpress = require("swagger-ui-express");
 // Internal dependencies
 const dataMock = require("./lib/dataMock");
 const handlerFcomposerHash = require("./handler");
+const middlewareFcomposerHash = require("./middleware");
 const routerFcomposer = require("./router");
 
 // App registration
@@ -51,10 +54,13 @@ const env = {
 };
 const diHash = {
   app,
+  bcrypt,
   dataMock,
   env,
   express,
   handlerFcomposerHash,
+  jwt,
+  middlewareFcomposerHash,
 };
 
 const router = routerFcomposer(diHash);
