@@ -7,7 +7,7 @@ const path = require("path");
 // knex
 const Knex = require("knex");
 const knexSetup = require("../app/db/knexSetup");
-const knex = Knex(knexSetup[process.env.APP_ENV]);
+const knexAgent = Knex(knexSetup[process.env.APP_ENV]);
 
 // yargs
 const yargs = require("yargs/yargs");
@@ -22,20 +22,20 @@ async function main() {
   const seedPath = path.resolve(__dirname, "../app/db/seed");
 
   if (seedFlag) {
-    await knex.seed.run({
+    await knexAgent.seed.run({
       directory: seedPath,
     });
   } else if (rollbackFlag) {
-    await knex.migrate.rollback({
+    await knexAgent.migrate.rollback({
       directory: migrationPath,
     });
   } else {
-    await knex.migrate.latest({
+    await knexAgent.migrate.latest({
       directory: migrationPath,
     });
   }
 
-  await knex.destroy();
+  await knexAgent.destroy();
 }
 
 main();

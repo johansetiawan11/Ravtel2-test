@@ -1,6 +1,6 @@
 {
   "name": "ravtel2-api",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "API for Ravtel App.",
   "main": "index.js",
   "scripts": {
