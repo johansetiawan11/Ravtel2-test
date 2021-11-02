@@ -20,6 +20,7 @@ const routerFcomposer = require("./router");
 // App registration
 const app = express();
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Swagger registration
