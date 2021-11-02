@@ -1,4 +1,5 @@
 const accountRouterFcomposer = require("./account");
+const ledgerRouterFcomposer = require("./ledger");
 const navRouterFcomposer = require("./nav");
 const subscriptionRouterFcomposer = require("./subscription");
 const userRouterFcomposer = require("./user");
@@ -23,6 +24,9 @@ function routerFcomposer(diHash) {
 
   const accountRouter = accountRouterFcomposer(diHash);
   expressRouter.use(accountRouter);
+
+  const ledgerRouter = ledgerRouterFcomposer(diHash);
+  expressRouter.use(ledgerRouter);
 
   const navRouter = navRouterFcomposer(diHash);
   expressRouter.use(navRouter);
