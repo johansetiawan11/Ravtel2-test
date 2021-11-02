@@ -1,17 +1,15 @@
-const deleteUser = require("./user/deleteUserHandlerFcomposer");
-const getUser = require("./user/getUserHandlerFcomposer");
-const getUserList = require("./user/getUserListHandlerFcomposer");
-const postUser = require("./user/postUserHandlerFcomposer");
-const postUserAuth = require("./user/postUserAuthHandlerFcomposer");
-const putUser = require("./user/putUserHandlerFcomposer");
+const accountHandlerFcomposerHash = require("./account");
+const userHandlerFcomposerHash = require("./user");
 
-const handlerFcomposerHash = {
-  deleteUser,
-  getUser,
-  getUserList,
-  postUser,
-  postUserAuth,
-  putUser,
-};
+const handlerFcomposerList = [
+  accountHandlerFcomposerHash,
+  userHandlerFcomposerHash,
+];
+const handlerFcomposerHash = {};
+
+for (let i = 0; i < handlerFcomposerList.length; i += 1) {
+  const handlerFcomposer = handlerFcomposerList[i];
+  Object.assign(handlerFcomposerHash, handlerFcomposer);
+}
 
 module.exports = handlerFcomposerHash;
