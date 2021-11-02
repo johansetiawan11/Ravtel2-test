@@ -2,25 +2,33 @@
  * @openapi
  * /account/{id}:
  *   delete:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
+ *     description: Delete an account record.
  *     parameters:
  *       - in: path
  *         name: id
- *         required: true
  *         description: ID of the account to delete
+ *         required: true
  *         schema:
  *            type: integer
  *     responses:
  *       200:
- *        description: Delete account record.
+ *        description: Deleted account record.
  *     tags:
  *       - account
  */
 function deleteAccountRouterComposer(diHash) {
-  const { express, handlerFcomposerHash, middlewareFcomposerHash } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const {
+    authHandlerFcomposerHash,
+    express,
+    handlerFcomposerHash,
+  } = diHash;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.deleteAccount;
-  expressRouter.delete("/account/:id", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.delete("/account/:id", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
   return expressRouter;
 }
 

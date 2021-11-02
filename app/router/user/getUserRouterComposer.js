@@ -2,12 +2,15 @@
  * @openapi
  * /user/{UUID}:
  *   get:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
  *     description: Retrieve a user record.
  *     parameters:
  *       - in: path
  *         name: UUID
- *         required: true
  *         description: UUID of the user to retrieve.
+ *         required: true
  *         schema:
  *           type: string
  *     responses:
@@ -18,14 +21,14 @@
  */
 function getUserRouterComposer(diHash) {
   const {
+    authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
-    middlewareFcomposerHash,
   } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getUser;
-  expressRouter.get("/user/:uuid", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.get("/user/:uuid", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

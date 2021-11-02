@@ -2,6 +2,9 @@
  * @openapi
  * /user:
  *   get:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
  *     description: Retrieve a list of user records.
  *     responses:
  *       200:
@@ -11,14 +14,14 @@
  */
 function getUserListRouterComposer(diHash) {
   const {
+    authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
-    middlewareFcomposerHash,
   } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getUserList;
-  expressRouter.get("/user", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.get("/user", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

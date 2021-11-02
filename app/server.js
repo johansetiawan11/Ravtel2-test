@@ -10,10 +10,10 @@ const swaggerJsdocFcomposer = require("swagger-jsdoc");
 const swaggerUiExpress = require("swagger-ui-express");
 
 // Internal dependencies
+const authHandlerFcomposerHash = require("./auth/handler");
 const dataMock = require("./lib/dataMock");
 const handlerFcomposerHash = require("./handler");
 const knexSetup = require("./db/knexSetup");
-const middlewareFcomposerHash = require("./middleware");
 const dbModelHashComposer = require("./db/index");
 const routerFcomposer = require("./router");
 
@@ -35,7 +35,10 @@ const swaggerJsdocOptionHash = {
       { url: "/v1" },
     ],
   },
-  apis: ["./app/router/**/*.js"],
+  apis: [
+    "./app/router/*.js",
+    "./app/router/**/*.js",
+  ],
 };
 const swaggerJsdoc = swaggerJsdocFcomposer(swaggerJsdocOptionHash);
 
@@ -56,12 +59,12 @@ app.use("/documentation", swaggerUiExpress.serve, swaggerUiExpress.setup(swagger
 const env = {
   APP_ENV: process.env.APP_ENV,
   GENERIC_JOB_API_KEY: process.env.GENERIC_JOB_API_KEY,
-  PERFORMANCE_FEE_DEBIT_INVESTOR_ID: process.env.PERFORMANCE_FEE_DEBIT_INVESTOR_ID,
 };
 const knexAgent = Knex(knexSetup[env.APP_ENV]);
 
 const diHash = {
   app,
+  authHandlerFcomposerHash,
   bcrypt,
   dataMock,
   env,
@@ -70,7 +73,6 @@ const diHash = {
   jwt,
   knexAgent,
   Knex,
-  middlewareFcomposerHash,
   objection,
 };
 
@@ -79,5 +81,14 @@ diHash.dbModelHash = dbModelHash;
 
 const router = routerFcomposer(diHash);
 app.use("/v1", router);
+
+// Error handler registration
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  res.status(err.status || 500).json({
+    message: err.message,
+  });
+});
 
 module.exports = app;

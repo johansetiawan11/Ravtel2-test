@@ -2,6 +2,9 @@
  * @openapi
  * /user:
  *   post:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
  *     description: Create a new user record.
  *     requestBody:
  *       required: true
@@ -44,14 +47,14 @@
  */
 function postUserRouterComposer(diHash) {
   const {
+    authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
-    middlewareFcomposerHash,
   } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.postUser;
-  expressRouter.post("/user", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.post("/user", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

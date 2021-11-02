@@ -11,7 +11,7 @@
  *             $ref: '#/components/schemas/postUserAuthPayload'
  *     responses:
  *       200:
- *         description: Login response.
+ *         description: User login response.
  *     tags:
  *       - user
  *
@@ -21,11 +21,11 @@
  *       type: object
  *       properties:
  *         username:
- *           type: string
  *           description: Username of user
- *         password:
  *           type: string
+ *         password:
  *           description: Password of user
+ *           type: string
  *       required:
  *         - username
  *         - password

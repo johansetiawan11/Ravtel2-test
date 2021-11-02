@@ -2,6 +2,9 @@
  * @openapi
  * /account:
  *   post:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
  *     description: Create a new account record.
  *     requestBody:
  *       required: true
@@ -21,83 +24,85 @@
  *       type: object
  *       properties:
  *         name:
- *           type: string
  *           description: Name of account for Personal
+ *           type: string
  *         gender:
+ *           description: Gender of account for Personal
  *           type: string
- *           description: gender of account for Personal
  *         birthday:
+ *           description: Birthday of account for Personal
  *           type: string
- *           description: birthday of account for Personal
  *         identityNum:
+ *           description: Identity num of account for Personal
  *           type: string
- *           description: identityNum of account for Personal
  *         companyName:
+ *           description: Company name of account for Company
  *           type: string
- *           description: companyName of account for Company
  *         industry:
+ *           description: Industry of account for Company
  *           type: string
- *           description: industry of account for Company
  *         doe:
- *           type: string
  *           description: Date Of Establish of account for Company
+ *           type: string
  *         regisNum:
+ *           description: Registration Number of account for Company
  *           type: string
- *           description: registration Number of account for Company
  *         email:
- *           type: string
  *           description: Email of account
+ *           type: string
  *         taxnum:
+ *           description: Tax number of account
  *           type: string
- *           description: taxNumber of account
  *         phone:
+ *           description: Phone of account
  *           type: string
- *           description: phone of account
  *         handphone:
+ *           description: Handphone of account
  *           type: string
- *           description: handphone of account
  *         address:
+ *           description: Address of account
  *           type: string
- *           description: address of account
  *         city:
+ *           description: City of account
  *           type: string
- *           description: city of account
  *         district:
+ *           description: Province/district of account
  *           type: string
- *           description: province / district of account
  *         country:
+ *           description: Country of account
  *           type: string
- *           description: country of account
  *         zipcode:
+ *           description: Zipcode of account
  *           type: string
- *           description: zipcode of account
  *         status:
+ *           description: Status of account
  *           type: string
- *           description: status of account
  *         accountName:
+ *           description: Account name of Bank for account
  *           type: string
- *           description: account name of Bank for account
  *         accountNumber:
+ *           description: Account number of Bank for account
  *           type: string
- *           description: account number of Bank for account
  *         branch:
+ *           description: Branch of Bank for account
  *           type: string
- *           description: branch of Bank for account
  *         swiftCode:
+ *           description: Swift code of Bank for account
  *           type: string
- *           description: swiftCode of Bank for account
  *         currency:
+ *           description: Currency of Bank for account
  *           type: string
- *           description: currency of Bank for account
  */
 function postAccountRouterComposer(diHash) {
   const {
+    authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
   } = diHash;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.postAccount;
-  expressRouter.post("/account", handlerFcomposer(diHash));
+  expressRouter.post("/account", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

@@ -2,6 +2,9 @@
  * @openapi
  * /account:
  *   get:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
  *     description: Retrieve a list of account records.
  *     responses:
  *       200:
@@ -11,14 +14,14 @@
  */
 function getAccountListRouterComposer(diHash) {
   const {
+    authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
-    middlewareFcomposerHash,
   } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getAccountList;
-  expressRouter.get("/account", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.get("/account", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

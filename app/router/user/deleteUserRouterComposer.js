@@ -2,25 +2,34 @@
  * @openapi
  * /user/{UUID}:
  *   delete:
+ *     security:
+ *       - appAuthScheme: []
+ *       - userAuthScheme: []
+ *     description: Delete a user record.
  *     parameters:
  *       - in: path
  *         name: UUID
- *         schema:
- *            type: string
+ *         description: UUID of the user to delete
  *         required: true
- *         description: String UUID of the user to delete
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *        description: Delete user record.
+ *        description: Deleted user record.
  *     tags:
  *       - user
  */
 function deleteUserRouterComposer(diHash) {
-  const { express, handlerFcomposerHash, middlewareFcomposerHash } = diHash;
-  const auth = middlewareFcomposerHash.Authentication;
+  const {
+    authHandlerFcomposerHash,
+    express,
+    handlerFcomposerHash,
+  } = diHash;
+  const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.deleteUser;
-  expressRouter.delete("/user/:uuid", [auth(diHash)], handlerFcomposer(diHash));
+  expressRouter.delete("/user/:uuid", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
   return expressRouter;
 }
 
