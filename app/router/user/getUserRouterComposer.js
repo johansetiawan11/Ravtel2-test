@@ -3,8 +3,8 @@
  * /user/{UUID}:
  *   get:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Retrieve a user record.
  *     parameters:
  *       - in: path

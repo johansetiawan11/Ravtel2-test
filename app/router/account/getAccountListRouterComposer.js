@@ -3,8 +3,8 @@
  * /account:
  *   get:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Retrieve a list of account records.
  *     responses:
  *       200:

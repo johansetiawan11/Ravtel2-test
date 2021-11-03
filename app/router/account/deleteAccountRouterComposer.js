@@ -3,8 +3,8 @@
  * /account/{id}:
  *   delete:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Delete an account record.
  *     parameters:
  *       - in: path

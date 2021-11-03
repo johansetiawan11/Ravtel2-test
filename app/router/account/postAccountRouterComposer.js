@@ -3,8 +3,8 @@
  * /account:
  *   post:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Create a new account record.
  *     requestBody:
  *       required: true

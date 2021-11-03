@@ -3,8 +3,8 @@
  * /user:
  *   post:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Create a new user record.
  *     requestBody:
  *       required: true

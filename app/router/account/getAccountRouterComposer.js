@@ -3,8 +3,8 @@
  * /account/{id}:
  *   get:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Retrieve an account record.
  *     parameters:
  *       - in: path

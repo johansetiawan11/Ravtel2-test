@@ -3,8 +3,8 @@
  * /user:
  *   get:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Retrieve a list of user records.
  *     responses:
  *       200:

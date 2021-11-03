@@ -3,8 +3,8 @@
  * /user/{UUID}:
  *   put:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Update a user record.
  *     parameters:
  *       - in: path

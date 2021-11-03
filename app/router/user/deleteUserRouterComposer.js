@@ -3,8 +3,8 @@
  * /user/{UUID}:
  *   delete:
  *     security:
- *       - appAuthScheme: []
  *       - userAuthScheme: []
+ *       - appAuthScheme: []
  *     description: Delete a user record.
  *     parameters:
  *       - in: path
