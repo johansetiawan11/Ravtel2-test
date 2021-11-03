@@ -267,6 +267,29 @@ const dataMock = {
       nextPf: "10/02/2021",
     },
   ],
+  navList: [
+    {
+      id: "1",
+      nlv: "0",
+      totalUnit: "0",
+      nav: "100",
+      date: "2021-01-31",
+    },
+    {
+      id: "2",
+      nlv: "412.7638",
+      totalUnit: "350",
+      nav: "117.93251428571428",
+      date: "2021-01-31",
+    },
+    {
+      id: "3",
+      nlv: "603.1422",
+      totalUnit: "517.5534530886672",
+      nav: "116.53718015029256",
+      date: "2021-01-31",
+    },
+  ],
 };
 
 module.exports = dataMock;
