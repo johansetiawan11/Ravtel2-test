@@ -1,4 +1,5 @@
 const accountRouterFcomposer = require("./account");
+const subscriptionRouterFcomposer = require("./subscription");
 const userRouterFcomposer = require("./user");
 
 /**
@@ -20,9 +21,11 @@ function routerFcomposer(diHash) {
   const expressRouter = express.Router();
 
   const accountRouter = accountRouterFcomposer(diHash);
-  expressRouter.use(accountRouter);
-
+  const subscriptionRouter = subscriptionRouterFcomposer(diHash);
   const userRouter = userRouterFcomposer(diHash);
+
+  expressRouter.use(accountRouter);
+  expressRouter.use(subscriptionRouter);
   expressRouter.use(userRouter);
 
   return expressRouter;

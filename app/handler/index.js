@@ -1,8 +1,10 @@
 const accountHandlerFcomposerHash = require("./account");
+const subscriptionHandlerFcomposerHash = require("./subscription");
 const userHandlerFcomposerHash = require("./user");
 
 const handlerFcomposerList = [
   accountHandlerFcomposerHash,
+  subscriptionHandlerFcomposerHash,
   userHandlerFcomposerHash,
 ];
 const handlerFcomposerHash = {};
