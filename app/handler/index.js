@@ -1,9 +1,11 @@
 const accountHandlerFcomposerHash = require("./account");
+const navHandlerFcomposerHash = require("./nav");
 const subscriptionHandlerFcomposerHash = require("./subscription");
 const userHandlerFcomposerHash = require("./user");
 
 const handlerFcomposerList = [
   accountHandlerFcomposerHash,
+  navHandlerFcomposerHash,
   subscriptionHandlerFcomposerHash,
   userHandlerFcomposerHash,
 ];
