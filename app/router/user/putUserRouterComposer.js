@@ -53,11 +53,15 @@ function putUserRouterComposer(diHash) {
     authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.putUser;
-  expressRouter.put("/user/:uuid", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
+  const routerPath = "/user/:uuid";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.put(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

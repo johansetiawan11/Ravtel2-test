@@ -17,11 +17,15 @@ function getUserListRouterComposer(diHash) {
     authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getUserList;
-  expressRouter.get("/user", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
+  const routerPath = "/user";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.get(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

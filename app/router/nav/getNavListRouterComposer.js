@@ -17,11 +17,15 @@ function getNavListRouterComposer(diHash) {
     authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getNavList;
-  expressRouter.get("/nav", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
+  const routerPath = "/nav";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.get(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

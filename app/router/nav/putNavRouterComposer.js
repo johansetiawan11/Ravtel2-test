@@ -45,11 +45,15 @@ function putNavRouterComposer(diHash) {
     authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.putNav;
-  expressRouter.put("/nav/:id", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
+  const routerPath = "/nav/:id";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.put(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

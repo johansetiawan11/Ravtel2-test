@@ -24,11 +24,15 @@ function getAccountRouterComposer(diHash) {
     authHandlerFcomposerHash,
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.getAccount;
-  expressRouter.get("/account/:id", [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+
+  const routerPath = "/account/:id";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.get(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }

@@ -34,10 +34,14 @@ function postUserAuthRouterComposer(diHash) {
   const {
     express,
     handlerFcomposerHash,
+    middlewareHash,
   } = diHash;
   const expressRouter = express.Router();
   const handlerFcomposer = handlerFcomposerHash.postUserAuth;
-  expressRouter.post("/user/auth", handlerFcomposer(diHash));
+
+  const routerPath = "/user/auth";
+  expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
+  expressRouter.post(routerPath, handlerFcomposer(diHash));
 
   return expressRouter;
 }

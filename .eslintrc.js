@@ -45,6 +45,7 @@ module.exports = {
     "no-unused-vars": ["error", { vars: "all", args: "none" }],
     "object-shorthand": 0,
     "operator-linebreak": ["error", "before"],
+    "padded-blocks": 0,
     "prefer-arrow-callback": 0,
     "prefer-destructuring": 0,
     "prefer-object-spread": 0,
