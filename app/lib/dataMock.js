@@ -345,6 +345,36 @@ const dataMock = {
       deleted_by: "",
     },
   ],
+  depositList: [
+    {
+      id: "1",
+      accountId: "001",
+      product: "Premier Index Alpha",
+      depositDate: "20-02-2020",
+      currency: "IDR",
+      amount: "100",
+      maturity: "24",
+      depositProof: "temp",
+      status: "New",
+      confirmedAmount: "100",
+      createdAt: "20-10-2020",
+      updatedAt: "25-10-2020",
+    },
+    {
+      id: "2",
+      accountId: "002",
+      product: "None",
+      depositDate: "20-02-2020",
+      currency: "IDR",
+      amount: "100",
+      maturity: "24",
+      depositProof: "temp",
+      status: "New",
+      confirmedAmount: "100",
+      createdAt: "20-10-2020",
+      updatedAt: "25-10-2020",
+    },
+  ],
 };
 
 module.exports = dataMock;

@@ -1,25 +1,25 @@
 /**
  * @openapi
- * /nav/{id}:
+ * /deposit/{id}:
  *   delete:
  *     security:
  *       - userAuthScheme: []
  *       - appAuthScheme: []
- *     description: Delete a nav record.
+ *     description: Delete a deposit record.
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the nav to delete.
+ *         description: ID of the deposit to delete.
  *         required: true
  *         schema:
  *           type: integer
  *     responses:
  *       200:
- *        description: Deleted nav record.
+ *         description: Delete deposit record.
  *     tags:
- *       - nav
+ *       - deposit
  */
-function deleteNavRouterComposer(diHash) {
+function deleteDepositRouterComposer(diHash) {
   const {
     authHandlerFcomposerHash,
     express,
@@ -28,13 +28,13 @@ function deleteNavRouterComposer(diHash) {
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
-  const handlerFcomposer = handlerFcomposerHash.deleteNav;
+  const handlerFcomposer = handlerFcomposerHash.deleteDeposit;
 
-  const routerPath = "/nav/:id";
+  const routerPath = "/deposit/:id";
   expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
   expressRouter.delete(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }
 
-module.exports = deleteNavRouterComposer;
+module.exports = deleteDepositRouterComposer;

@@ -9,7 +9,7 @@
  *     parameters:
  *       - in: path
  *         name: UUID
- *         description: UUID of the user to delete
+ *         description: UUID of the user to delete.
  *         required: true
  *         schema:
  *           type: string

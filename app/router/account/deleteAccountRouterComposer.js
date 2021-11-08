@@ -9,7 +9,7 @@
  *     parameters:
  *       - in: path
  *         name: id
- *         description: ID of the account to delete
+ *         description: ID of the account to delete.
  *         required: true
  *         schema:
  *            type: integer
