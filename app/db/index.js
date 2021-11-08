@@ -1,4 +1,5 @@
 const accountDbModelComposer = require("./model/accountDbModelComposer");
+const ledgerDbModelComposer = require("./model/ledgerDbModelComposer");
 const userDbModelComposer = require("./model/userDbModelComposer");
 
 function dbModelHashComposer(diHash) {
@@ -11,6 +12,7 @@ function dbModelHashComposer(diHash) {
 
   const dbModelComposerHash = {
     Account: accountDbModelComposer,
+    Ledger: ledgerDbModelComposer,
     User: userDbModelComposer,
   };
   const dbModelComposerHashKeys = Object.keys(dbModelComposerHash);
