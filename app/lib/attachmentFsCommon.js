@@ -2,6 +2,7 @@ const fileMimeTypeToExtensionDictionary = {
   "image/gif": "gif",
   "image/jpeg": "jpg",
   "image/png": "png",
+  "text/csv": "csv",
 };
 
 function getFileExtension(fileMimeType) {

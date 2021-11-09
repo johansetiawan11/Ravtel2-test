@@ -2,6 +2,7 @@
 const awsSdk = require("aws-sdk");
 const bcrypt = require("bcryptjs");
 const cors = require("cors");
+const csvtojson = require("csvtojson");
 const express = require("express");
 const expressOpenapiValidator = require("express-openapi-validator");
 const fs = require("fs-extra");
@@ -110,6 +111,7 @@ const diHash = {
   authHandlerFcomposerHash,
   awsSdk,
   bcrypt,
+  csvtojson,
   dataMock,
   env,
   express,
