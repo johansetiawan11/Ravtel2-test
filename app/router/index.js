@@ -7,6 +7,7 @@ const navRouterFcomposer = require("./nav");
 const productRouterFcomposer = require("./product");
 const subscriptionRouterFcomposer = require("./subscription");
 const userRouterFcomposer = require("./user");
+const withdrawalRouterFcomposer = require("./withdrawal");
 
 /**
  * @openapi
@@ -52,6 +53,9 @@ function routerFcomposer(diHash) {
 
   const userRouter = userRouterFcomposer(diHash);
   expressRouter.use(userRouter);
+
+  const withdrawalRouter = withdrawalRouterFcomposer(diHash);
+  expressRouter.use(withdrawalRouter);
 
   return expressRouter;
 }

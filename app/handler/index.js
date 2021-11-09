@@ -7,6 +7,7 @@ const navHandlerFcomposerHash = require("./nav");
 const productHandlerFcomposerHash = require("./product");
 const subscriptionHandlerFcomposerHash = require("./subscription");
 const userHandlerFcomposerHash = require("./user");
+const withdrawalHandlerFcomposerHash = require("./withdrawal");
 
 const handlerFcomposerList = [
   accountHandlerFcomposerHash,
@@ -18,6 +19,7 @@ const handlerFcomposerList = [
   productHandlerFcomposerHash,
   subscriptionHandlerFcomposerHash,
   userHandlerFcomposerHash,
+  withdrawalHandlerFcomposerHash,
 ];
 const handlerFcomposerHash = {};
 
