@@ -375,6 +375,32 @@ const dataMock = {
       updatedAt: "25-10-2020",
     },
   ],
+  productList: [
+    {
+      id: "1",
+      productName: "testing1",
+      productDescription: "Descirption Testing1",
+      performanceFee: "20000",
+      penaltyFee: "10000",
+      created_by: "init",
+      updated_at: "2021-10-26",
+      updated_by: "init",
+      deleted_at: "",
+      deleted_by: "",
+    },
+    {
+      id: "2",
+      productName: "testing2",
+      productDescription: "Descirption Testing2",
+      performanceFee: "20000",
+      penaltyFee: "10000",
+      created_by: "init",
+      updated_at: "2021-10-26",
+      updated_by: "init",
+      deleted_at: "",
+      deleted_by: "",
+    },
+  ],
 };
 
 module.exports = dataMock;

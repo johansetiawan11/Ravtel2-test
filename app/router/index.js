@@ -3,6 +3,7 @@ const bankRouterFcomposer = require("./bank");
 const depositRouterFcomposer = require("./deposit");
 const ledgerRouterFcomposer = require("./ledger");
 const navRouterFcomposer = require("./nav");
+const productRouterFcomposer = require("./product");
 const subscriptionRouterFcomposer = require("./subscription");
 const userRouterFcomposer = require("./user");
 
@@ -38,6 +39,9 @@ function routerFcomposer(diHash) {
 
   const navRouter = navRouterFcomposer(diHash);
   expressRouter.use(navRouter);
+
+  const productRouter = productRouterFcomposer(diHash);
+  expressRouter.use(productRouter);
 
   const subscriptionRouter = subscriptionRouterFcomposer(diHash);
   expressRouter.use(subscriptionRouter);
