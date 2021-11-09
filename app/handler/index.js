@@ -3,6 +3,7 @@ const bankHandlerFcomposerHash = require("./bank");
 const depositHandlerFcomposerHash = require("./deposit");
 const ledgerHandlerFcomposerHash = require("./ledger");
 const navHandlerFcomposerHash = require("./nav");
+const productHandlerFcomposerHash = require("./product");
 const subscriptionHandlerFcomposerHash = require("./subscription");
 const userHandlerFcomposerHash = require("./user");
 
@@ -12,6 +13,7 @@ const handlerFcomposerList = [
   depositHandlerFcomposerHash,
   ledgerHandlerFcomposerHash,
   navHandlerFcomposerHash,
+  productHandlerFcomposerHash,
   subscriptionHandlerFcomposerHash,
   userHandlerFcomposerHash,
 ];
