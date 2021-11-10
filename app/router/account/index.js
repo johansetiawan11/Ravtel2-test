@@ -1,7 +1,8 @@
 const deleteAccountRouterComposer = require("./deleteAccountRouterComposer");
 const getAccountListRouterComposer = require("./getAccountListRouterComposer");
 const getAccountRouterComposer = require("./getAccountRouterComposer");
-const postUserAuthRouterComposer = require("./postAccountRouterComposer");
+const postAccountRouterComposer = require("./postAccountRouterComposer");
+const putAccountRouterComposer = require("./putAccountRouterComposer");
 
 function accountRouterFcomposer(diHash) {
   const {
@@ -9,10 +10,11 @@ function accountRouterFcomposer(diHash) {
   } = diHash;
   const expressRouter = express.Router();
 
+  expressRouter.use(putAccountRouterComposer(diHash));
   expressRouter.use(deleteAccountRouterComposer(diHash));
+  expressRouter.use(postAccountRouterComposer(diHash));
   expressRouter.use(getAccountListRouterComposer(diHash));
   expressRouter.use(getAccountRouterComposer(diHash));
-  expressRouter.use(postUserAuthRouterComposer(diHash));
 
   return expressRouter;
 }

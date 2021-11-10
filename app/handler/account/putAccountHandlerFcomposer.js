@@ -1,4 +1,4 @@
-function postAccountHandlerFcomposer(diHash) {
+function putAccountHandlerFcomposer(diHash) {
   const {
     dataMock,
     attachmentFsCommonAdapter,
@@ -6,23 +6,23 @@ function postAccountHandlerFcomposer(diHash) {
     Promise,
   } = diHash;
   const { accountList, bankList } = dataMock;
-
   async function addPhoto(item, fileResp) {
-    const reqFileMimeType = item.mimetype;
-    const reqFileExtension = attachmentFsCommon.getFileExtension(reqFileMimeType);
-
-    if (reqFileExtension) {
-      await attachmentFsCommonAdapter.moveReqFileToStorage(item)
-      .then((result) => {
-        fileResp[item.fieldname] = result;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    if (item) {
+      const reqFileMimeType = item.mimetype;
+      const reqFileExtension = attachmentFsCommon.getFileExtension(reqFileMimeType);
+      if (reqFileExtension) {
+        await attachmentFsCommonAdapter.moveReqFileToStorage(item)
+        .then((result) => {
+          fileResp[item.fieldname] = result;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+      }
     }
   }
 
-  async function postAccountHandler(req, res) {
+  async function putAccountHandler(req, res) {
     try {
       const fileResp = {};
       const promiseContainer = [
@@ -30,14 +30,13 @@ function postAccountHandlerFcomposer(diHash) {
         addPhoto(req.files[1], fileResp),
         addPhoto(req.files[2], fileResp),
       ];
-      if (req.files && req.files.length > 0) {
-        await Promise.all(promiseContainer);
-      }
+      const account = accountList.find((item) => (item.id).toString() === req.params.id);
+      const bank = bankList.find((item) => item.accountId === account.id);
+
       let newAccount;
-      const lastIndexAccount = accountList.length - 1;
       if (req.body.entity === "Personal") {
         newAccount = {
-          id: `00${+accountList[lastIndexAccount].id + 1}`,
+          id: account.id,
           name: req.body.name,
           email: req.body.email,
           gender: req.body.gender,
@@ -54,11 +53,8 @@ function postAccountHandlerFcomposer(diHash) {
           zipcode: req.body.zipcode,
           entity: req.body.entity,
           status: "Pending",
-          idcard: fileResp.idcard,
-          taxcard: fileResp.taxcard,
-          selfie: fileResp.selfie,
-          created_at: new Date(Date.now()).toLocaleString().split(",")[0],
-          created_by: req.userId,
+          created_at: account.created_at,
+          created_by: account.created_by,
           updated_at: new Date(Date.now()).toLocaleString().split(",")[0],
           updated_by: req.userId,
           deleted_at: null,
@@ -66,7 +62,7 @@ function postAccountHandlerFcomposer(diHash) {
         };
       } else {
         newAccount = {
-          id: `00${+accountList[lastIndexAccount].id + 1}`,
+          id: account.id,
           companyName: req.body.companyName,
           email: req.body.email,
           industry: req.body.industry,
@@ -82,11 +78,8 @@ function postAccountHandlerFcomposer(diHash) {
           zipcode: req.body.zipcode,
           entity: req.body.entity,
           status: "Pending",
-          idcard: fileResp.idcard,
-          taxcard: fileResp.taxcard,
-          selfie: fileResp.selfie,
-          created_at: new Date(Date.now()).toLocaleString().split(",")[0],
-          created_by: req.userId,
+          created_at: account.created_at,
+          created_by: account.created_by,
           updated_at: new Date(Date.now()).toLocaleString().split(",")[0],
           updated_by: req.userId,
           deleted_at: null,
@@ -94,7 +87,7 @@ function postAccountHandlerFcomposer(diHash) {
         };
       }
       const newBank = {
-        id: +bankList[lastIndexAccount].id + 1,
+        id: bank.id,
         bankName: req.body.bankName,
         accountId: newAccount.id,
         accountName: req.body.accountName,
@@ -103,8 +96,17 @@ function postAccountHandlerFcomposer(diHash) {
         swiftCode: req.body.swiftCode,
         currency: req.body.currency,
       };
-      accountList.push(newAccount);
-      bankList.push(newBank);
+
+      if (promiseContainer.length > 0) {
+        await Promise.all(promiseContainer).then(() => {
+          newAccount.idcard = Object.prototype.hasOwnProperty.call(fileResp, "idcard") ? fileResp.idcard : account.idcard;
+          newAccount.taxcard = Object.prototype.hasOwnProperty.call(fileResp, "taxcard") ? fileResp.taxcard : account.taxcard;
+          newAccount.selfie = Object.prototype.hasOwnProperty.call(fileResp, "selfie") ? fileResp.selfie : account.selfie;
+        });
+      }
+      const accountIndex = accountList.findIndex(key => (key.id).toString() === req.params.id);
+      accountList[accountIndex] = newAccount;
+      bankList[accountIndex] = newBank;
       res.status(200).send({
         account: newAccount,
         bank: newBank,
@@ -116,6 +118,6 @@ function postAccountHandlerFcomposer(diHash) {
       });
     }
   }
-  return postAccountHandler;
+  return putAccountHandler;
 }
-module.exports = postAccountHandlerFcomposer;
+module.exports = putAccountHandlerFcomposer;

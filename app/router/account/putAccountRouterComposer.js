@@ -1,30 +1,37 @@
 /**
  * @openapi
- * /account:
- *   post:
+ * /account/{id}:
+ *   put:
  *     security:
  *       - userAuthScheme: []
  *       - appAuthScheme: []
- *     description: Create a new account record.
+ *     description: Update an account record.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: ID of the account to update.
+ *         required: true
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
  *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/postAccountPayload'
+ *             $ref: '#/components/schemas/putAccountPayload'
  *     responses:
  *       200:
- *         description: Created account record.
+ *         description: Updated account record.
  *     tags:
  *       - account
  *
  * components:
  *   schemas:
- *     postAccountPayload:
+ *     putAccountPayload:
  *       type: object
  *       properties:
  *         entity:
- *           description: Entity of account for (Personal Or Company)
+ *           description: Entity of account for Personal
  *           type: string
  *         name:
  *           description: Name of account for Personal
@@ -107,28 +114,8 @@
  *           description: File path for selfie
  *           type: string
  *           format: binary
- *       required:
- *        - entity
- *        - email
- *        - taxnum
- *        - phone
- *        - handphone
- *        - address
- *        - city
- *        - district
- *        - country
- *        - zipcode
- *        - status
- *        - accountName
- *        - accountNumber
- *        - branch
- *        - swiftCode
- *        - currency
- *        - idcard
- *        - taxcard
- *        - selfie
  */
-function postAccountRouterComposer(diHash) {
+function putAccountRouterComposer(diHash) {
   const {
     authHandlerFcomposerHash,
     express,
@@ -137,13 +124,13 @@ function postAccountRouterComposer(diHash) {
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
-  const handlerFcomposer = handlerFcomposerHash.postAccount;
+  const handlerFcomposer = handlerFcomposerHash.putAccount;
 
-  const routerPath = "/account";
+  const routerPath = "/account/:id";
   expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
-  expressRouter.post(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
+  expressRouter.put(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
   return expressRouter;
 }
 
-module.exports = postAccountRouterComposer;
+module.exports = putAccountRouterComposer;
