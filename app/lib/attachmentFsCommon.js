@@ -45,7 +45,7 @@ class Adapter {
       Key: `${this.s3RootDir}/${fileKey}`,
       Body: reqFile.buffer, // Stream the file directly from client-side to AWS S3
     };
-    const storageResponse = new Promise((resolve, reject) => {
+    const storageResponse = new this.Promise((resolve, reject) => {
       this.s3Agent.upload(s3Params, (err, data) => {
         if (err) {
           reject(err);
