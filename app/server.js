@@ -15,6 +15,7 @@ const swaggerJsdocFcomposer = require("swagger-jsdoc");
 const swaggerUiExpress = require("swagger-ui-express");
 
 // Internal dependencies
+const aclAdminCommon = require("./auth/aclAdminCommon");
 const attachmentFsCommon = require("./lib/attachmentFsCommon");
 const authHandlerFcomposerHash = require("./auth/handler");
 const dataMock = require("./lib/dataMock");
@@ -125,6 +126,9 @@ const diHash = {
   path,
   Promise,
 };
+
+const aclAdminCommonAdapter = new aclAdminCommon.Adapter();
+diHash.aclAdminCommonAdapter = aclAdminCommonAdapter;
 
 const attachmentFsCommonAdapter = new attachmentFsCommon.Adapter(diHash);
 diHash.attachmentFsCommonAdapter = attachmentFsCommonAdapter;

@@ -1,3 +1,4 @@
+const aclRole = require("../../const/aclRole");
 const dbTableName = require("../../const/dbTableName");
 
 const localDbTableName = dbTableName.USERS;
@@ -11,6 +12,7 @@ exports.up = async (knex) => {
       username    TEXT NOT NULL DEFAULT '',
       password    TEXT NOT NULL,
       email       TEXT NOT NULL,
+      acl_role    acl_role NOT NULL DEFAULT '${aclRole.INITIATE}'::acl_role,
 
       created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       created_by  TEXT NOT NULL DEFAULT '',

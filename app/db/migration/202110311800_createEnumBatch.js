@@ -1,4 +1,5 @@
 const accountType = require("../../const/accountType");
+const aclRole = require("../../const/aclRole");
 const activityType = require("../../const/activityType");
 const attachmentType = require("../../const/attachmentType");
 const currency = require("../../const/currency");
@@ -14,6 +15,12 @@ exports.up = async (knex) => {
     ('${accountType.PERSONAL}', '${accountType.INSTITUTIONAL}', '${accountType.OTHER}');
   `);
   console.log(`+++ 'account_type' enum created.`);
+
+  await knex.raw(`
+    CREATE TYPE acl_role AS ENUM
+    ('${aclRole.INITIATE}', '${aclRole.OBSERVER_ADMIN}', '${aclRole.OPERATION_AGENT}', '${aclRole.SALES_AGENT}', '${aclRole.SUPER_ADMIN}', '${aclRole.TRADER}');
+  `);
+  console.log(`+++ 'acl_role' enum created.`);
 
   await knex.raw(`
     CREATE TYPE activity_type AS ENUM
@@ -70,6 +77,9 @@ exports.down = async (knex) => {
 
   await knex.raw(`DROP TYPE activity_type;`);
   console.log(`--- 'activity_type' enum dropped.`);
+
+  await knex.raw(`DROP TYPE acl_role;`);
+  console.log(`--- 'account_type' enum dropped.`);
 
   await knex.raw(`DROP TYPE account_type;`);
   console.log(`--- 'account_type' enum dropped.`);
