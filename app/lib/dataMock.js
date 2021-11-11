@@ -450,6 +450,41 @@ const dataMock = {
       deleted_by: "",
     },
   ],
+  withdrawalList: [
+    {
+      id: "1",
+      accountId: "001",
+      amount: "120",
+      product: "Premier Index Alpha",
+      withdrawDate: "25-02-2021",
+      createdAt: "11-02-2021",
+      targetDate: "11-02-2021",
+      sla: "-",
+      status: "NEW",
+    },
+    {
+      id: "2",
+      accountId: "002",
+      amount: "120",
+      product: "Premier Index Alpha",
+      withdrawDate: "25-02-2021",
+      createdAt: "11-02-2021",
+      targetDate: "11-02-2021",
+      sla: "-",
+      status: "NEW",
+    },
+    {
+      id: "3",
+      accountId: "002",
+      amount: "120",
+      product: "Premier Index Alpha",
+      withdrawDate: "25-02-2021",
+      createdAt: "11-02-2021",
+      targetDate: "11-02-2021",
+      sla: "-",
+      status: "NEW",
+    },
+  ],
 };
 
 module.exports = dataMock;
