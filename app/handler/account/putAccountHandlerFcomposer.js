@@ -112,12 +112,14 @@ function putAccountHandlerFcomposer(diHash) {
         bank: newBank,
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
+      console.error(error);
+
+      res.status(503).send({
         message: error.message,
       });
     }
   }
+
   return putAccountHandler;
 }
 module.exports = putAccountHandlerFcomposer;

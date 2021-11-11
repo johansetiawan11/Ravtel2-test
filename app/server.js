@@ -24,6 +24,7 @@ const handlerFcomposerHash = require("./handler");
 const knexSetup = require("./db/knexSetup");
 const dbModelHashComposer = require("./db/index");
 const routerFcomposer = require("./router");
+const sqlCommon = require("./lib/sqlCommon");
 
 // App registration
 // ----------------
@@ -125,6 +126,7 @@ const diHash = {
   objection,
   path,
   Promise,
+  sqlCommon,
 };
 
 const aclAdminCommonAdapter = new aclAdminCommon.Adapter();

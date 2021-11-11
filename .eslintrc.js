@@ -33,6 +33,7 @@ module.exports = {
     "no-console": 0,
     "no-constant-condition": 0,
     "no-continue": 0,
+    "no-else-return": 0,
     "no-lonely-if": 0,
     "no-loop-func": 0,
     "no-multi-assign": 0,

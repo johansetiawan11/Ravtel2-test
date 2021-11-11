@@ -30,23 +30,23 @@
  *     putUserPayload:
  *       type: object
  *       properties:
- *         fullname:
- *           description: Full name of user
+ *         username:
+ *           description: Username of user.
  *           type: string
  *         email:
- *           description: Email of user
+ *           description: Email of user.
  *           type: string
- *         username:
- *           description: username of user
+ *         password:
+ *           description: Password of user.
  *           type: string
- *         rolename:
- *           description: rolename of user
+ *         aclRole:
+ *           description: ACL role of user.
  *           type: string
  *       required:
- *         - email
- *         - fullname
- *         - rolename
  *         - username
+ *         - email
+ *         - password
+ *         - aclRole
  */
 function putUserRouterComposer(diHash) {
   const {

@@ -23,27 +23,23 @@
  *     postUserPayload:
  *       type: object
  *       properties:
- *         fullname:
- *           type: string
- *           description: Name of user
- *         email:
- *           type: string
- *           description: Email of user
- *         password:
- *           type: string
- *           description: Password of user
  *         username:
+ *           description: Username of user.
  *           type: string
- *           description: username of use
- *         rolename:
+ *         email:
+ *           description: Email of user.
  *           type: string
- *           description: rolename of use
+ *         password:
+ *           description: Password of user.
+ *           type: string
+ *         aclRole:
+ *           description: ACL role of user.
+ *           type: string
  *       required:
- *         - email
- *         - fullname
- *         - password
- *         - rolename
  *         - username
+ *         - email
+ *         - password
+ *         - aclRole
  */
 function postUserRouterComposer(diHash) {
   const {
