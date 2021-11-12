@@ -1,31 +1,73 @@
+const errorSid = require("../../const/errorSid");
+
 function postLedgerHandlerFcomposer(diHash) {
-  const { dataMock } = diHash;
-  const { ledgerList } = dataMock;
+  const {
+    dbModelHash,
+    objection,
+  } = diHash;
+  const {
+    Ledger,
+  } = dbModelHash;
+  const {
+    UniqueViolationError,
+  } = objection;
+
   async function postLedgerHandler(req, res) {
     try {
-      const params = {
-        id: ledgerList.length + 1,
-        accound_id: 2,
-        event_code: req.body.event_code,
-        transaction_date: new Date(Date.now()).toLocaleString().split(",")[0],
-        credit: req.body.credit,
-        debit: req.body.debit,
+      const body = req.body;
+
+      const ledgerInsertArgHash = {
+        account_id: body.accountId,
+        event_code: body.eventCode,
+        transaction_date: new Date().toISOString(),
+        info: body.info,
+        credit: body.credit,
+        debit: body.debit,
+        created_at: new Date().toISOString(),
+        created_by: "system",
       };
-      ledgerList.push({
-        ...params,
-        balance: params.event_code === "credit" ? ledgerList[ledgerList.length - 1].balance + params.credit : ledgerList[ledgerList.length - 1].balance - params.debit,
-        reference_table: params.event_code === "credit" ? "subscription" : "redemption",
-        reference_id: params.event_code === "credit" ? "1" : "2",
+
+      const ledgerQueryResponse = await Ledger
+      .query()
+      .whereNull("deleted_at");
+
+      const ledgerLast = ledgerQueryResponse[ledgerQueryResponse.length - 1];
+
+      const ledgerInsertResponse = await Ledger
+      .query()
+      .insert({
+        ...ledgerInsertArgHash,
+        balance: body.eventCode === "credit" ? Number(ledgerQueryResponse.length > 0 ? ledgerLast.balance : 0) + body.credit : Number(ledgerQueryResponse.length > 0 ? ledgerLast.balance : 0) - body.debit,
+        reference_table: body.eventCode === "credit" ? "deposit" : "withdrawal",
+        reference_id: body.eventCode === "credit" ? "1" : "2",
       });
 
-      res.status(200).send({
-        message: "succesfuly created",
-        ledger: ledgerList,
+      const ledgerRefetchResponse = await ledgerInsertResponse.$query();
+
+      return res.status(200).json({
+        data: ledgerRefetchResponse,
       });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: error.message,
+    } catch (err) {
+      console.error(err);
+
+      let debugInfo;
+
+      if (err instanceof UniqueViolationError) {
+        if (err.constraint) {
+          debugInfo = {
+            constraint: err.constraint,
+          };
+        }
+
+        return res.status(409).send({
+          message: errorSid.POST_LEDGER_HANDLER_OPERATION_CONFLICTED,
+          debugInfo,
+        });
+      }
+
+      return res.status(503).send({
+        message: errorSid.POST_LEDGER_HANDLER_OPERATION_FAILED,
+        debugInfo: err.message,
       });
     }
   }
@@ -34,3 +76,4 @@ function postLedgerHandlerFcomposer(diHash) {
 }
 
 module.exports = postLedgerHandlerFcomposer;
+
