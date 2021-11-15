@@ -23,17 +23,24 @@
  *     postLedgerPayload:
  *       type: object
  *       properties:
+ *         accountId:
+ *           type: number
+ *           description: ID Account of Ledger
  *         credit:
  *           type: number
- *           description: credit
+ *           description: Credit Value of Ledger
  *         debit:
  *           type: number
- *           description: debit
- *         event_code:
+ *           description: Debit Value of Ledger
+ *         eventCode:
  *           type: string
- *           description: event_code
+ *           description: Event Code of Ledger
+ *         info:
+ *           type: string
+ *           description: Info of Ledger
  *       required:
- *         - event_code
+ *         - accountId
+ *         - eventCode
  */
 function postLedgerRouterComposer(diHash) {
   const {

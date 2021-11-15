@@ -6,6 +6,13 @@
  *       - userAuthScheme: []
  *       - appAuthScheme: []
  *     description: Retrieve a ledger record.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: id of the ledger to retrieve.
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Retrieved ledger record.
