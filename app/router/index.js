@@ -4,6 +4,7 @@ const depositRouterFcomposer = require("./deposit");
 const investmentRouterFcomposer = require("./investment");
 const ledgerRouterFcomposer = require("./ledger");
 const navRouterFcomposer = require("./nav");
+const portfolioRouterFcomposer = require("./portfolio");
 const productRouterFcomposer = require("./product");
 const subscriptionRouterFcomposer = require("./subscription");
 const userRouterFcomposer = require("./user");
@@ -47,6 +48,9 @@ function routerFcomposer(diHash) {
 
   const productRouter = productRouterFcomposer(diHash);
   expressRouter.use(productRouter);
+
+  const portfolioRouter = portfolioRouterFcomposer(diHash);
+  expressRouter.use(portfolioRouter);
 
   const subscriptionRouter = subscriptionRouterFcomposer(diHash);
   expressRouter.use(subscriptionRouter);
