@@ -1,48 +1,81 @@
+const errorSid = require("../../const/errorSid");
+
 function postInvestmentHandlerFcomposer(diHash) {
-  const { dataMock } = diHash;
-  const { investmentList, investmentActivity } = dataMock;
+  const {
+    dbModelHash,
+    objection,
+  } = diHash;
+  const {
+    Investment,
+  } = dbModelHash;
+  const {
+    UniqueViolationError,
+  } = objection;
   async function postInvestmentHandler(req, res) {
     try {
-      const newInvestment = {
-        id: investmentList[investmentList.length - 1].id + 1,
-        accountId: req.body.accountId,
-        productId: req.body.productId,
-        lastUnitAmount: req.body.lastUnitAmount,
-        hwm: req.body.hwm,
-        performanceFeePercent: req.body.performanceFeePercent,
-        penaltyFeePercent: req.body.penaltyFeePercent,
-        invesmentDate: req.body.invesmentDate,
-        nextPerformanceFeeDate: req.body.nextPerformanceFeeDate,
-        maturityDate: req.body.maturityDate,
-        created_at: new Date(Date.now()).toLocaleString().split(",")[0],
-        created_by: 1,
-        updated_at: null,
-        updated_by: 1,
-        deleted_at: null,
-        deleted_by: null,
+      const body = req.body;
+      const investmentInsertArgHash = {
+        account_id: body.accountId,
+        product_id: body.productId,
+        last_unit_amount: req.body.lastUnitAmount,
+        hwm: body.hwm,
+        performance_fee_percent: body.performanceFeePercent,
+        penalty_fee_percent: body.penaltyFeePercent,
+        investment_date: body.invesmentDate,
+        next_performance_fee_date: body.nextPerformanceFeeDate,
+        maturity_date: body.maturityDate,
+        created_at: new Date().toISOString(),
+        created_by: "system",
       };
-      const newInvestmentActivity = {
-        id: investmentActivity[investmentActivity.length - 1].id + 1,
-        investmentId: newInvestment.id,
-        activityType: "investment",
-        unitAmount: "30000",
-        hwm: "2500",
-        currency: "IDR",
-        currencyAmount: "10000",
-        description: "investment test",
-        created_at: new Date(Date.now()).toLocaleString().split(",")[0],
-        created_by: 1,
-      };
-      investmentList.push(newInvestment);
-      investmentActivity.push(newInvestmentActivity);
-      res.status(200).send({
-        investment: newInvestment,
-        investmentActivity: investmentActivity,
+
+      const investmentInsertResponse = await Investment
+      .query()
+      .insert(investmentInsertArgHash);
+
+      // Refetch the record to populate uuid, etc
+      const investRefetchResponse = await investmentInsertResponse.$query();
+
+      /**
+      * NOTE: waiting for ui investment.
+      * TODO: insert to tabel investmentActivity.
+      */
+
+      //  const newInvestmentActivity = {
+      //   investmentId: newInvestment.id,
+      //   activityType: "investment",
+      //   unitAmount: "30000",
+      //   hwm: "2500",
+      //   currency: "IDR",
+      //   currencyAmount: "10000",
+      //   description: "investment test",
+      //   created_at: new Date(Date.now()).toLocaleString().split(",")[0],
+      //   created_by: 1,
+      //  };
+
+      return res.status(200).json({
+        data: investRefetchResponse,
       });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: error.message,
+    } catch (err) {
+      console.error(err);
+
+      let debugInfo;
+
+      if (err instanceof UniqueViolationError) {
+        if (err.constraint) {
+          debugInfo = {
+            constraint: err.constraint,
+          };
+        }
+
+        return res.status(409).send({
+          message: errorSid.POST_INVESTMENT_HANDLER_OPERATION_CONFLICTED,
+          debugInfo,
+        });
+      }
+
+      return res.status(503).send({
+        message: errorSid.POST_INVESTMENT_HANDLER_OPERATION_FAILED,
+        debugInfo: err.message,
       });
     }
   }

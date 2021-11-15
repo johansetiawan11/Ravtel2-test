@@ -13,6 +13,26 @@
  *         schema:
  *           type: string
  *           nullable: true
+ *       - in: query
+ *         name: page
+ *         description: Listing page number.
+ *         schema:
+ *           type: integer
+ *           nullable: true
+ *       - in: query
+ *         name: length
+ *         description: Listing length.
+ *         schema:
+ *           type: integer
+ *           nullable: true
+ *       - in: query
+ *         name: direction
+ *         description: Listing sort direction.
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *           default: desc
+ *           nullable: true
  *     responses:
  *       200:
  *         description: Retrieved list of investment records.
