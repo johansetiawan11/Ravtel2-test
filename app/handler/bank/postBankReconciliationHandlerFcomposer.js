@@ -1,30 +1,34 @@
 function postBankReconciliationHandlerFcomposer(diHash) {
-  const { csvtojson } = diHash;
+  const { csvtojson, attachmentFsCommon, attachmentFsCommonAdapter } = diHash;
+
   async function postBankReconciliationHandler(req, res) {
     try {
-      if (
-        req.files
-        && (req.files.length > 0)
-      ) {
-        /**
-          * NOTE: just csv is not messy can to convert json.
-          * TODO: create function to stripCSV messy.
-          */
-        const dataCSV = await csvtojson({
+      let storageResponse;
+      let csvJson;
+      if (req.files && (req.files.length > 0)) {
+        const reqFile = req.files[0];
+        const reqFileMimeType = reqFile.mimetype;
+        const reqFileExtension = attachmentFsCommon.getFileExtension(reqFileMimeType); // Only allow certain MIME types
+        if (reqFileExtension) {
+          storageResponse = await attachmentFsCommonAdapter.moveReqFileToStorage(reqFile)
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send({
+              message: err.message,
+            });
+          });
+        }
+        csvJson = await csvtojson({
           trim: true, delimiter: "auto", checkType: true,
         }).fromString(req.files[0].buffer.toString());
 
-        res.status(200).send({
-          message: "Uploaded the file successfully",
-          data: {
-            account_id: req.body.account_id,
-            transaction_date: req.body.transaction_date,
-            name: req.body.name,
-            column: Object.keys(dataCSV[0]),
-            data: dataCSV,
-          },
-        });
       }
+      // TODO save value to database
+
+      res.status(200).send({
+        file: storageResponse.s3Response.Location,
+        csv: csvJson,
+      });
     } catch (err) {
       res.status(500).send(err);
     }

@@ -1,6 +1,6 @@
 /**
  * @openapi
- * /bank/reconciliation:
+ * /bank/reconciliation/preview:
  *   post:
  *     security:
  *       - userAuthScheme: []
@@ -11,7 +11,7 @@
  *       content:
  *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/postBankReconciliationPayload'
+ *             $ref: '#/components/schemas/postBankReconciliationPreviewPayload'
  *     responses:
  *       200:
  *         description: Created bank reconciliation record.
@@ -20,17 +20,25 @@
  *
  * components:
  *   schemas:
- *     postBankReconciliationPayload:
+ *     postBankReconciliationPreviewPayload:
  *       type: object
  *       properties:
+ *         account_id:
+ *           description: Account ID
+ *           type: string
+ *         transaction_date:
+ *           description: Transaction date
+ *           type: string
  *         file:
  *           description: File path
  *           type: string
  *           format: binary
  *       required:
+ *         - account_id
+ *         - transaction_date
  *         - file
  */
-function postBankReconciliationRouterComposer(diHash) {
+function postBankReconciliationPreviewRouterComposer(diHash) {
   const {
     authHandlerFcomposerHash,
     express,
@@ -39,9 +47,9 @@ function postBankReconciliationRouterComposer(diHash) {
   } = diHash;
   const appOrUserAuthHandlerFcomposer = authHandlerFcomposerHash.appOrUser;
   const expressRouter = express.Router();
-  const handlerFcomposer = handlerFcomposerHash.postBankReconciliation;
+  const handlerFcomposer = handlerFcomposerHash.postBankReconciliationPreview;
 
-  const routerPath = "/bank/reconciliation";
+  const routerPath = "/bank/reconciliation/preview";
   expressRouter.use(routerPath, middlewareHash.standardMiddlewareList);
   expressRouter.post(routerPath, [appOrUserAuthHandlerFcomposer(diHash)], handlerFcomposer(diHash));
 
@@ -49,4 +57,4 @@ function postBankReconciliationRouterComposer(diHash) {
 
 }
 
-module.exports = postBankReconciliationRouterComposer;
+module.exports = postBankReconciliationPreviewRouterComposer;

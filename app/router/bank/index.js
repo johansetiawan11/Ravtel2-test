@@ -1,3 +1,4 @@
+const postBankReconciliationPreviewRouterComposer = require("./postBankReconciliationPreviewRouterComposer");
 const postBankReconciliationRouterComposer = require("./postBankReconciliationRouterComposer");
 
 function bankReconciliationRouterFcomposer(diHash) {
@@ -6,6 +7,7 @@ function bankReconciliationRouterFcomposer(diHash) {
   } = diHash;
   const expressRouter = express.Router();
 
+  expressRouter.use(postBankReconciliationPreviewRouterComposer(diHash));
   expressRouter.use(postBankReconciliationRouterComposer(diHash));
 
   return expressRouter;
